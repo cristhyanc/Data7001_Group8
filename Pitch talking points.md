@@ -26,3 +26,8 @@ Enrichment:
 **4. How we'll tell the story**
 - Build a user friendly web tool allowing citizens to explore/visualise government spending and any spatial relationships to electoral status, in the context of other possible explanations for variation.
 - We may look broadly e.g. Queensland and focus our enrichment effort on a narrower area e.g. SEQ or Brisbane.
+
+**Feedback received from Professor Shazia Sadiq and Dr Thomas Taimre on pitch via Zoom 16/09/20**
+- Data ingestion techniques such as OCR (optical character recognition) can be frustrating. Be careful of time management.
+- Remember that, in the end, the product needs to be something visual.
+- Making a web tool could be too ambitious / time consuming. Don't be afraid to settle for some static visualisations.

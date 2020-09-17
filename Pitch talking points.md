@@ -9,17 +9,16 @@ Core:
 - Electoral boundaries. Available as shape files on QSpatial website for 2017 boundaries.
 - Electoral results. (To determine safe ALP / safe LNP / marginal for each electorate.) Available on ECQ website by electorate for 2017 and previous elections.
 - Queensland State Infrastrucutre Plan. (For spending.) Available from DSDTI website as pdf document.
-- Basic census data. (E.g. to use population to translate spending into per capita spending, and more.)
+- Census data, such as population growth and demographics (indicators of public needs in health care, child/aged care, public transport, road), private/public business growth (indicator of building/road/port construction requirement), income growth
 
 Enrichment:
-- Expanded census data. (E.g. income, wealth, population densitry, growth rates.)
 - Tender data. (E.g. to identify contractors/party patterns.)
 - Stated policy objectives of government: e.g. declared priority development areas, Office of Northern Australia plans.
 - Others we identify as we go.
 
 **3. What we'll do**
-- Ingest the spending data, work out into which electorate it falls where possible.
-- Ingest the electoral results, categories into safe ALP / safe LNP / marginal.
+- Integrated the spending data and the census data. We'll build a model to predict the likelihood of getting a budget approval for an electorate based on Census data. Based on the model, we can test our hypothesis of whether the government spent money based on public needs.
+- Ingest the electoral results, categories into safe ALP / safe LNP / marginal. We'll also confirm this hypothesis that the budget was more likely to be allocated to a certain electoral for political influence
 - Visualise the results, see what we find. Spatial exploratory data analysis.
 - Mix in from the enrichment data sources.
 

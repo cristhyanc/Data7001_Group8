@@ -17,7 +17,7 @@ Enrichment:
 - Others we identify as we go.
 
 **3. What we'll do**
-- Integrated the spending data and the census data. We'll build a model to predict the likelihood of getting a budget approval for an electorate based on Census data. Based on the model, we can test our hypothesis of whether the government spent money based on public needs.
+- Integrate the spending data and the census data. We'll build a model to predict the likelihood of getting a budget approval for an electorate based on Census data. Based on the model, we can test our hypothesis of whether the government spent money based on public needs.
 - Ingest the electoral results, categories into safe ALP / safe LNP / marginal. We'll also confirm this hypothesis that the budget was more likely to be allocated to a certain electoral for political influence
 - Visualise the results, see what we find. Spatial exploratory data analysis.
 - Mix in from the enrichment data sources.

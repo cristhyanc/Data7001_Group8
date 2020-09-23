@@ -15,12 +15,14 @@ Enrichment:
 Tender data. (E.g. to identify contractors/party patterns.)
 Stated policy objectives of government: e.g. declared priority development areas, Office of Northern Australia plans.
 Others we identify as we go.
-3. What we'll do
+
+3. What we'll do 
 
 Integrate the spending data and the census data. We'll build a model to predict the likelihood of getting a budget approval for an electorate based on Census data. Based on the model, we can test our hypothesis of whether the government spent money based on public needs.
 Ingest the electoral results, categories into safe ALP / safe LNP / marginal. We'll also confirm this hypothesis that the budget was more likely to be allocated to a certain electoral for political influence
 Visualise the results, see what we find. Spatial exploratory data analysis.
 Mix in from the enrichment data sources.
+
 4. How we'll tell the story
 
 Build a user friendly web tool allowing citizens to explore/visualise government spending and any spatial relationships to electoral status, in the context of other possible explanations for variation.

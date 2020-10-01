@@ -10,7 +10,7 @@ import csv
 
 def download_pdf_results(year):
     webpage = requests.get('https://www.ecq.qld.gov.au/elections/election-results-and-statistics/' + year + 
-                           '-state-election', proxies = {'http':'gateway.ghd.zscaler.net:80'})
+                           '-state-election')
     soup =  bs(webpage.content,'html.parser')
     
     for a in soup.find_all('a', href=True):

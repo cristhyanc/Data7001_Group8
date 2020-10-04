@@ -1,3 +1,16 @@
+**Wednesday 30/09/2020 20:00 by Zoom**
+
+Attendees via Zoom:
+* SAK
+* CCG
+* MC
+* CJRS
+* HHV
+
+Work plan for Thursday 1/10/2020 to Wednesday 7/10/2020
+* Get an SQL database up and running. - SAK & CCG
+* Load ingested data into database. - everyone
+
 **Wednesday 23/09/2020 20:00 by Zoom**
 
 Attendees via Zoom:

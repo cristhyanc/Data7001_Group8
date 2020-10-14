@@ -1,0 +1,72 @@
+﻿@page "/"
+@using Syncfusion.Blazor.Maps
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<Syncfusion.Blazor.Buttons.SfButton OnClick="Zoom_Button">Zoom</Syncfusion.Blazor.Buttons.SfButton>
+
+<SfMaps @ref="mapQueensland" Layers="@Layers"  BaseLayerIndex="@LayerIndex" ID="mapQueensland" Height="700">
+    <MapsEvents OnZoom="Zooming" ShapeSelected="ShapeSelection"></MapsEvents>
+    <MapsTitleSettings Text="Queensland">
+        <MapsTitleTextStyle Size="16px" />
+    </MapsTitleSettings>
+    <MapsZoomSettings Enable="true" DoubleClickZoom="true" EnablePanning="true" SelectionColor="red" EnableSelectionZooming="true" MaxZoom="7000" />
+    <!--<MapsLayers>
+
+        <MapsLayer LayerType="ShapeLayerType.Geometry" Type="Syncfusion.Blazor.Maps.Type.Layer" ShapeData='new { dataOptions = "data/State_electoral_boundaries_2017.json" }'
+                   DataSource="PopulationDetails" ShapeDataPath="Name" ShapePropertyPath='@("NAME")'>
+
+            <MapsShapeSettings Fill="#E5E5E5">
+
+
+                <MapsShapeBorder Color="#000000" Width="0.3" />-->
+
+                @*<MapsShapeColorMappings>
+                    <MapsShapeColorMapping From="1" To=" 1" Color='@("yellow")' />
+                    <MapsShapeColorMapping From="2" To=" 2" Color='@("green")' />
+                </MapsShapeColorMappings>*@
+
+            <!--</MapsShapeSettings>
+            <MapsDataLabelSettings Visible="true"
+                                   LabelPath="name"
+                                   SmartLabelMode="SmartLabelMode.Hide">
+            </MapsDataLabelSettings>-->
+
+            @*<MapsMarkerClusterSettings AllowClustering="false" Shape="MarkerType.Image" Height="50" Width="50" ImageUrl="css/cluster.svg">
+                <MapsLayerMarkerClusterLabelStyle Color="#FFFFFF" />
+            </MapsMarkerClusterSettings>*@
+
+            <!--<MapsMarkerSettings>
+
+                <MapsMarker Visible="true" Shape="MarkerType.Image" ImageUrl="css/ballon.png" Height="20" Width="20" DataSource="@Projects">
+                    <MapsMarkerBorder Color="#285255" Width="2" />
+                    <MapsMarkerTooltipSettings Visible="true" Format="<b>${ProjectTitle}</b>" />
+                </MapsMarker>
+            </MapsMarkerSettings>-->
+
+
+            @*<MapsMarkerSettings>
+                <MapsMarker Visible="true" DataSource="Projects" Height="25" Width="25">
+                    <MapsMarkerTooltipSettings Visible="true" ValuePath="ProjectTitle" />
+                </MapsMarker>
+            </MapsMarkerSettings>*@
+
+
+        <!--</MapsLayer>-->
+      
+
+
+        @*<MapsLayer ShapeData='new {dataOptions ="data/Australia.json"}'>
+            <MapsShapeSettings Fill="#E5E5E5">
+                <MapsShapeBorder Color="black" Width="0.15" />
+            </MapsShapeSettings>
+            <MapsDataLabelSettings Visible="true" LabelPath="iso_3166_2" SmartLabelMode="SmartLabelMode.Hide" />
+        </MapsLayer>*@
+    <!--</MapsLayers>-->
+</SfMaps>
+
+
+
+

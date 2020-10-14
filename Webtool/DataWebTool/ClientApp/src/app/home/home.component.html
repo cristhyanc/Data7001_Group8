@@ -1,0 +1,11 @@
+
+<div id="button" style="font-size:14px;margin-left: 10px;margin-top: 20px;display:none;left:50px;top:50px;">
+  <a id="category" style="visibility:hidden; color:blue; display:inline-block"> Queensland Map </a>
+  <p style="visibility:hidden; display:inline-block" id="symbol">&nbsp;&gt;&gt;&nbsp;</p>
+  <p id="text" style="display:inline-block;"></p>
+</div>
+
+
+<ejs-maps id='maps' #maps style="display:block;" height="700" (shapeSelected)="shapeSelected($event)" [titleSettings]='titleSettings' [zoomSettings]='zoomSettings' [layers]='layers' (load)="load($event)">
+
+</ejs-maps>

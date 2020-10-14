@@ -10,7 +10,7 @@ import csv
 
 def download_pdf_results(year):
     webpage = requests.get('https://www.ecq.qld.gov.au/elections/election-results-and-statistics/' + year + 
-                           '-state-election')
+                           '-state-election', proxies = {'http':'gateway.ghd.zscaler.net:80'})
     soup =  bs(webpage.content,'html.parser')
     
     for a in soup.find_all('a', href=True):
@@ -91,4 +91,34 @@ with open('election_results_two_preferred.csv', 'w', newline='') as f:
     for row in two_cand_results:
         writer.writerow(row)
     
+# %% Seat Safety
+import pandas as pd
+
+twoCandResult = pd.read_csv('election_results_two_preferred.csv', names = ['Year', 'Electorate', 'Party', 'Votes'])
+twoCandResult2017 = twoCandResult[twoCandResult['Year'] == 2017]
+
+results = []
+for electorate in twoCandResult2017['Electorate'].unique():
+    eResult = twoCandResult2017[twoCandResult2017['Electorate'] == electorate].reset_index()
+    votePerc = eResult['Votes']/eResult['Votes'][eResult['Party'] == 'Total'].iloc[0]
+    winPerc = max(votePerc.iloc[0:2])
+    losePerc = min(votePerc.iloc[0:2])
+    margin = winPerc - losePerc
+    if margin < 0.02:
+        safety = 'Swing'
+    elif margin < 0.06:
+        safety = 'Marginal'
+    elif margin < 0.1:
+        safety = 'Fairly Safe'
+    else:
+        safety = 'Safe'
+    winningParty = eResult['Party'].iloc[votePerc.index[votePerc == max(votePerc.iloc[0:2])][0]]
+    
+    results.append((electorate, winningParty, safety, '{0:.2f}'.format(margin*100)))
+    
+with open('electorateSafety.csv', 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerow(('Electorate','Party', 'Safety', 'Margin'))
+    for row in results:
+        writer.writerow(row)
     

@@ -35,7 +35,7 @@ namespace DataWebTool.dbs863472
             //Scaffold-DbContext "server=localhost;port=3306;user=root;password=password;database=dbs863472" MySql.Data.EntityFrameworkCore -OutputDir dbs863472 -f
             if (!optionsBuilder.IsConfigured)
             {
-                //  optionsBuilder.UseMySQL("server=db5000995754.hosting-data.io;port=3306;user=dbu853069;password=Data7001Group&;database=dbs863472");
+                
                 optionsBuilder.UseMySQL("server=localhost;port=3306;user=root;password=password;database=dbs863472");
             }
         }

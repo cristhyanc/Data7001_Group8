@@ -21,6 +21,12 @@ namespace DataWebTool.Controllers
             _context = context;
         }
 
+        [HttpGet("Test1")]
+        public string Test1()
+        {
+            return "I am in";
+        }
+
         [HttpGet("GetProjects")]
         public IEnumerable<Projectscsv> GetProjects()
         {

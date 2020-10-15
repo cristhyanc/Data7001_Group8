@@ -32,9 +32,10 @@ namespace DataWebTool.dbs863472
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            //Scaffold-DbContext "server=localhost;port=3306;user=root;password=password;database=dbs863472" MySql.Data.EntityFrameworkCore -OutputDir dbs863472 -f
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                //  optionsBuilder.UseMySQL("server=db5000995754.hosting-data.io;port=3306;user=dbu853069;password=Data7001Group&;database=dbs863472");
                 optionsBuilder.UseMySQL("server=localhost;port=3306;user=root;password=password;database=dbs863472");
             }
         }
@@ -454,12 +455,22 @@ namespace DataWebTool.dbs863472
                     .HasMaxLength(42)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Electorate)
+                    .IsRequired()
+                    .HasColumnName("electorate")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.FinancialYear)
                     .HasMaxLength(11)
                     .IsUnicode(false);
 
                 entity.Property(e => e.FutureFinancialYearExpenditure)
                     .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.GeneralDepartment)
+                    .HasMaxLength(45)
                     .IsUnicode(false);
 
                 entity.Property(e => e.IndicativePqcrating)

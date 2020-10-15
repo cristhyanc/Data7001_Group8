@@ -7,6 +7,9 @@ import {
 } from '@syncfusion/ej2-angular-maps';
 import { MapAjax } from '@syncfusion/ej2-maps';
 import { HttpClient } from '@angular/common/http';
+import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
+import { AnimationModel } from '@syncfusion/ej2-progressbar';
+import { ProgressBar } from '@syncfusion/ej2-angular-progressbar';
 Maps.Inject(Highlight, MapsTooltip, Marker, Zoom);
 
 @Component({
@@ -15,22 +18,52 @@ Maps.Inject(Highlight, MapsTooltip, Marker, Zoom);
 })
 export class HomeComponent implements OnInit {
 
-  public projects: object[];
+
+  public primaryXAxis = {
+  valueType: 'Category',
+    title: 'Departments'
+};
+
+
+  public animation: AnimationModel = { enable: true, duration: 2000, delay: 0 };
+  public type1: string = 'Linear';
+  public width1: string = '650';
+  public height1: string = '60';
+  public trackThickness1: number = 4;
+  public progressThickness1: number = 4;
+  public min1: number = 0;
+  public max1: number = 100;
+  public value1: number = 20;
+  public isIndeterminate1: boolean = true;
+  
+  public mapheight: number = 1000;
+  
+  public electoralDistrictFields: Object = { text: 'electoralDistrict', value: 'electoralDistrict' };
+  public electoralDistrictValue: string = '';
+  public projects: Projectscsv[];
   public electoralBoundaries: string;
   public electoraldistricts: Electoraldistricts[];
-  public layers: object[]=[];
+  public layers: object[] = [];
+  public departmentsCount: ItemFunnelChart[] = [];
+
   @ViewChild("maps") public maps: MapsComponent;
+  @ViewChild('listElectoralDistrict') public listElectoralDistrict: DropDownListComponent;
+  @ViewChild('progressBar')  public progressBar1: ProgressBar;
+
+
+
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
 
-    http.get<object[]>(baseUrl + 'data7001/GetProjects').subscribe(result => {
+    http.get<Projectscsv[]>(baseUrl + 'data7001/GetProjects').subscribe(result => {
       this.projects = result;
+      this.createFunnelDepartmentData(result);
       this.createLayers();
     }, error => console.error(error));
 
     http.get<string>(baseUrl + 'data7001/GetElectoralBoundaries').subscribe(result => {
       this.electoralBoundaries = result;
-      console.log(this.electoralBoundaries);
+    
       this.createLayers();
     }, error => console.error(error));
 
@@ -41,12 +74,7 @@ export class HomeComponent implements OnInit {
     }, error => console.error(error));
   }
 
-  public load = (args: ILoadEventArgs) => {
-    let theme: string = location.hash.split('/')[1];
-    theme = theme ? theme : 'Material';
-    args.maps.theme = <MapsTheme>(theme.charAt(0).toUpperCase() + theme.slice(1));
-  }
-
+ 
   ngOnInit() {
 
     try {
@@ -56,8 +84,41 @@ export class HomeComponent implements OnInit {
     } catch (e) {
       console.error(e);
     }
+  }
 
+  private createFunnelDepartmentData(projects: Projectscsv[]) {  
 
+    try {
+
+      let departments: ItemFunnelChart[] = [];
+      let department: ItemFunnelChart;
+      
+
+      for (var project of projects) {
+        department = departments.find(x => x.name === project.generalDepartment);
+
+        if (department != null) {
+
+          department.y = department.y + 1;
+
+        } else {
+          department = {
+            name: project.generalDepartment,
+            x: project.generalDepartment,
+            y: 1
+          }
+          departments.push(department);
+        }
+
+      }
+
+      for (department of departments) {
+        department.y = (department.y / projects.length)*100
+      }    
+      this.departmentsCount = [...departments.sort((x, y) => x.y > y.y ? 1 : -1)];     
+    } catch (e) {
+      console.error(e);
+    }    
   }
 
 
@@ -91,14 +152,14 @@ export class HomeComponent implements OnInit {
           smartLabelMode: "Hide"
         },
 
-        markerClusterSettings: {
-          allowClustering: true,
-          shape: 'Image',
-          height: 40,
-          width: 40,
-          labelStyle: { color: 'white' },
-          imageUrl: 'css/cluster.svg'
-        },
+        //markerClusterSettings: {
+        //  allowClustering: true,
+        //  shape: 'Image',
+        //  height: 40,
+        //  width: 40,
+        //  labelStyle: { color: 'white' },
+        //  imageUrl: 'css/cluster.svg'
+        //},
 
         markerSettings:
           [{            
@@ -119,6 +180,8 @@ export class HomeComponent implements OnInit {
       for (var district of this.electoraldistricts) {
         district.position = posti;
         posti = posti + 1;
+        let disProjects = this.projects.filter(x => x.electorate.toUpperCase() === district.electoralDistrict.toUpperCase());
+
         var layer = {
           layerType: 'Geometry',         
           shapeData: JSON.parse(district.coordinates),
@@ -142,15 +205,6 @@ export class HomeComponent implements OnInit {
             smartLabelMode: "Hide"
           },
 
-          markerClusterSettings: {
-            allowClustering: true,
-            shape: 'Image',
-            height: 40,
-            width: 40,
-            labelStyle: { color: 'white' },
-            imageUrl: 'css/cluster.svg'
-          },
-
           markerSettings:
             [{
               visible: true,
@@ -158,7 +212,7 @@ export class HomeComponent implements OnInit {
               imageUrl: "css/ballon.png",
               height: 20,
               width: 20,
-              dataSource: this.projects,
+              dataSource: disProjects,
               tooltipSettings: { visible: true, valuePath: 'projectTitle' }
             }]
 
@@ -182,40 +236,45 @@ export class HomeComponent implements OnInit {
     let shapeData: ShapeData = (args.shapeData as ShapeData);
 
    
-    if (this.maps.baseLayerIndex === 0)
+    if (this.maps.baseLayerIndex === 0 && !touchmove)
     {
-      var district = this.electoraldistricts.filter(x => x.electoralDistrict.toUpperCase() === shapeData.NAME.toUpperCase());
-      if (district.length>0) {
-        this.maps.baseLayerIndex = district[0].position;
-        this.maps.refresh();
-        let button: HTMLElement = document.getElementById('button'); button.style.display = 'block';
-       
-        (<HTMLElement>document.getElementById('category')).style.visibility = 'visible';
-        (<HTMLElement>document.getElementById('text')).innerHTML = district[0].electoralDistrict;
-        (<HTMLElement>document.getElementById('symbol')).style.visibility = 'visible';
-
-
-      }
-
-     
+      this.DrillMap(shapeData.NAME);
+      touchmove = false;
     }
 
+  }
+
+  public onlistElectoralDistrictChange(args: any): void {
+
+    if (this.listElectoralDistrict.value != null) {
+      this.DrillMap(this.listElectoralDistrict.value.toString());
+    }
+   
+  }
+
+
+  private DrillMap(newDistrict: string) {
+
+    var district = this.electoraldistricts.filter(x => x.electoralDistrict.toUpperCase() === newDistrict.toUpperCase());
+    if (district.length > 0) {
+      this.maps.baseLayerIndex = district[0].position;
+
+      this.createFunnelDepartmentData(this.projects.filter(x => x.electorate.toUpperCase() === newDistrict.toUpperCase()));
+
+      this.maps.refresh();
+      this.mapheight = 50;
+      let button: HTMLElement = document.getElementById('button'); button.style.display = 'block';
+
+      (<HTMLElement>document.getElementById('category')).style.visibility = 'visible';
+      (<HTMLElement>document.getElementById('text')).innerHTML = district[0].electoralDistrict;
+      (<HTMLElement>document.getElementById('symbol')).style.visibility = 'visible';
 
 
 
-    //if (this.maps.baseLayerIndex === 0 ) {
-    //  if (shape === 'Africa') { 
-    //    this.maps.baseLayerIndex = shape.ID;
-    //    this.maps.refresh();
-    //  }
-    //  console.log(shape);
-    //  //let button: HTMLElement = document.getElementById('button'); button.style.display = 'block';
-    //  //document.getElementById('content').innerHTML = '';
-    //  //(<HTMLElement>document.getElementById('category')).style.visibility = 'visible';
-    //  //(<HTMLElement>document.getElementById('text')).innerHTML = shape;
-    //  //(<HTMLElement>document.getElementById('symbol')).style.visibility = 'visible';
-    //};
-    //touchmove = false;
+
+      //(<HTMLElement>document.getElementById('chartDepartments')).style.visibility = 'visible';
+    }
+
   }
 
   public zoomSettings: object = {
@@ -235,19 +294,45 @@ export class HomeComponent implements OnInit {
 
 
   ngAfterViewInit() {
+
+    //(<HTMLElement>document.getElementById('chartDepartments')).style.visibility = 'hidden';
+
     document.getElementById('category').onclick = () => {
-      this.maps.baseLayerIndex = 0;
+      this.maps.baseLayerIndex = 0;     
       this.maps.refresh();
+      this.mapheight = 1000;
       let button: HTMLElement = document.getElementById('button');
       button.style.display = 'none';
       (<HTMLElement>document.getElementById('category')).style.visibility = 'hidden';
       (<HTMLElement>document.getElementById('text')).innerHTML = '';
       (<HTMLElement>document.getElementById('symbol')).style.visibility = 'hidden';
+      this.createFunnelDepartmentData(this.projects);
+      //(<HTMLElement>document.getElementById('chartDepartments')).style.visibility = 'hidden';
     };
+  }
+
+  public loaded = (args: ILoadedEventArgs) => {
+    let mapsSVG: HTMLElement = document.getElementById('maps') as HTMLElement;
+   
+    if (mapsSVG) {
+      mapsSVG.addEventListener('touchmove', (e: MouseEvent) => { touchmove = true; }, false);
+    }
+  }
+
+
+  public load = (args: ILoadEventArgs) => {
+    let theme: string = location.hash.split('/')[1];
+    theme = theme ? theme : 'Material';
+    args.maps.theme = <MapsTheme>(theme.charAt(0).toUpperCase() + theme.slice(1));
   }
 
 }
 
+
+
+
+
+let touchmove: boolean;
 export interface ShapeData { NAME: string; ID: number }
 export interface Electoraldistricts {
   idelectoralDistrict: number;
@@ -255,4 +340,37 @@ export interface Electoraldistricts {
   year: number | null;
   coordinates: string;
   position: number;
+} 
+
+
+export interface Projectscsv {
+  projectTitle: string;
+  department: string;
+  projectType: string;
+  totalEstimatedCost: string;
+  lastFinancialYearExpenditure: string;
+  currentFinancialYearExpenditure: string;
+  ongoingProgram: string;
+  futureFinancialYearExpenditure: string;
+  tenderCall: string;
+  procurementSystem: string;
+  indicativePqcrating: string;
+  region: string;
+  commentary: string;
+  tenderType: string;
+  projectEnvironment: string;
+  indigenousCommunity: string;
+  projectNumber: string;
+  annotations: string;
+  financialYear: string;
+  latitude: number | null;
+  longitude: number | null;
+  electorate: string;
+  generalDepartment: string;
+}
+
+export interface ItemFunnelChart {
+  x: string;
+  y: number;
+  name: string;
 }

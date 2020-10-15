@@ -26,5 +26,7 @@ namespace DataWebTool.dbs863472
         public string FinancialYear { get; set; }
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
+        public string Electorate { get; set; }
+        public string GeneralDepartment { get; set; }
     }
 }

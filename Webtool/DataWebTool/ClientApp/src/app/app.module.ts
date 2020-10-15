@@ -12,6 +12,10 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { MapsAllModule, MapsModule  } from '@syncfusion/ej2-angular-maps';
+import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
+import { ProgressBarModule } from '@syncfusion/ej2-angular-progressbar';
+import { AccumulationChartModule, ChartModule } from '@syncfusion/ej2-angular-charts';
+import { BarSeriesService, StackingBarSeriesService, CategoryService } from '@syncfusion/ej2-angular-charts';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,7 @@ import { MapsAllModule, MapsModule  } from '@syncfusion/ej2-angular-maps';
     FetchDataComponent
   ],
   imports: [
-    MapsAllModule, MapsModule  ,
+    MapsAllModule, MapsModule, DropDownListModule, ProgressBarModule, ChartModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
@@ -33,7 +37,7 @@ import { MapsAllModule, MapsModule  } from '@syncfusion/ej2-angular-maps';
       { path: 'fetch-data', component: FetchDataComponent },
     ])
   ],
-  providers: [],
+  providers: [BarSeriesService, StackingBarSeriesService, CategoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

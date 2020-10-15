@@ -8,6 +8,5 @@ namespace DataWebTool.dbs863472
         public int IdelectoralDistrict { get; set; }
         public string ElectoralDistrict { get; set; }
         public int? Year { get; set; }
-
     }
 }

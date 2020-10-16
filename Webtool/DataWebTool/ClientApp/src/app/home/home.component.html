@@ -1,0 +1,49 @@
+
+
+
+
+
+<div class="control-section">
+  <div class="row ">
+
+
+    <div class="col-12">
+      Electoral
+      <ejs-dropdownlist id='districts' #listElectoralDistrict [dataSource]='electoraldistricts' (change)='onlistElectoralDistrictChange($event)' [value]='electoralDistrictValue'
+                        [fields]='electoralDistrictFields'
+                        placeholder='Select Electoral District'></ejs-dropdownlist>
+
+
+      <ejs-progressbar #progressBar1 id='progressBar1' [type]='type1' [maximum]='max1' [minimum]='min1'
+                       [value]='value1' [width]='width1' [height]='height1'
+                       [animation]='animation'
+                       [isIndeterminate]='isIndeterminate1'>
+
+      </ejs-progressbar>
+
+
+    </div>
+  </div>
+  <div class="row ">
+    <div class="col-6">
+      <div id="button" style="font-size:14px;margin-left: 10px;margin-top: 20px;display:none;left:50px;top:50px;">
+        <a id="category" style="visibility:hidden; color:blue; display:inline-block"> Queensland Map </a>
+        <p style="visibility:hidden; display:inline-block" id="symbol">&nbsp;&gt;&gt;&nbsp;</p>
+        <p id="text" style="display:inline-block;"></p>
+      </div>
+      <ejs-maps id='maps' #maps style="display:block;" height="700" width="100%" (shapeSelected)="shapeSelected($event)" [titleSettings]='titleSettings' [zoomSettings]='zoomSettings' [layers]='layers' (load)="load($event)" (loaded)="loaded($event)">
+
+      </ejs-maps>
+    </div>
+    <div id="chartDepartments" class="col-6">
+      <ejs-chart   [primaryXAxis]='primaryXAxis' width="100%">
+        <e-series-collection>
+          <e-series [dataSource]='departmentsCount' type='Bar' xName='name' yName='y' name='Projects'></e-series>
+        </e-series-collection>
+      </ejs-chart>
+    </div>
+  </div>
+</div>
+
+
+

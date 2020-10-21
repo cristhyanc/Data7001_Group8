@@ -16,6 +16,7 @@ import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 import { ProgressBarModule } from '@syncfusion/ej2-angular-progressbar';
 import { AccumulationChartModule, ChartModule } from '@syncfusion/ej2-angular-charts';
 import { BarSeriesService, StackingBarSeriesService, CategoryService } from '@syncfusion/ej2-angular-charts';
+import { CheckBoxModule } from '@syncfusion/ej2-angular-buttons';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { BarSeriesService, StackingBarSeriesService, CategoryService } from '@sy
     FetchDataComponent
   ],
   imports: [
-    MapsAllModule, MapsModule, DropDownListModule, ProgressBarModule, ChartModule,
+    MapsAllModule, MapsModule, DropDownListModule, ProgressBarModule, ChartModule, CheckBoxModule ,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,

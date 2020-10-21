@@ -10,5 +10,11 @@ namespace DataWebTool.dbs863472
     {
         [NotMapped]
         public string Coordinates { get; set; }
+
+        [NotMapped]
+        public ElectorateSafety CurrentParty { get; set; }
+
+        [NotMapped]
+        public string CurrentPartyID { get; set; }
     }
 }

@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { AnimationModel } from '@syncfusion/ej2-progressbar';
 import { ProgressBar } from '@syncfusion/ej2-angular-progressbar';
+import { ChangeEventArgs } from '@syncfusion/ej2-angular-buttons';
 Maps.Inject(Highlight, MapsTooltip, Marker, Zoom);
 
 @Component({
@@ -24,6 +25,26 @@ export class HomeComponent implements OnInit {
     title: 'Departments'
 };
 
+  public zoomSettings: object = {
+    enable: true,
+    maxZoom: 7000,
+    doubleClickZoom: true,
+    enablePanning: true,
+    enableSelectionZooming: true,
+  };
+
+  public titleSettings: object = {
+    text: 'Queensland',
+    textStyle: {
+      size: '16px'
+    }
+  };
+
+  public legendSettings: Object = {
+    visible: true,
+    valuePath: 'currentPartyID',
+    removeDuplicateLegend: true
+  }
 
   public animation: AnimationModel = { enable: true, duration: 2000, delay: 0 };
   public type1: string = 'Linear';
@@ -45,6 +66,8 @@ export class HomeComponent implements OnInit {
   public electoraldistricts: Electoraldistricts[];
   public layers: object[] = [];
   public departmentsCount: ItemFunnelChart[] = [];
+  public displayProjects: boolean;  
+  public population: Population[] = [];
 
   @ViewChild("maps") public maps: MapsComponent;
   @ViewChild('listElectoralDistrict') public listElectoralDistrict: DropDownListComponent;
@@ -55,6 +78,11 @@ export class HomeComponent implements OnInit {
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
 
+    http.get<Population[]>(baseUrl + 'data7001/GetPopulation').subscribe(result => {
+      this.population = result;
+    
+    }, error => console.error(error));
+
     http.get<Projectscsv[]>(baseUrl + 'data7001/GetProjects').subscribe(result => {
       this.projects = result;
       this.createFunnelDepartmentData(result);
@@ -63,13 +91,11 @@ export class HomeComponent implements OnInit {
 
     http.get<string>(baseUrl + 'data7001/GetElectoralBoundaries').subscribe(result => {
       this.electoralBoundaries = result;
-    
       this.createLayers();
     }, error => console.error(error));
 
     http.get<Electoraldistricts[]>(baseUrl + 'data7001/GetElectoraldistricts2017').subscribe(result => {
       this.electoraldistricts = result;
-      //console.log(this.electoraldistricts);
       this.createLayers();
     }, error => console.error(error));
   }
@@ -79,7 +105,7 @@ export class HomeComponent implements OnInit {
 
     try {
 
-
+      this.displayProjects = true;
 
     } catch (e) {
       console.error(e);
@@ -121,13 +147,15 @@ export class HomeComponent implements OnInit {
     }    
   }
 
-
   private createLayers() {
     try {
 
       if (this.electoraldistricts == null || this.projects == null || this.electoralBoundaries==null ) {
         return;
       }
+
+    
+      this.layers = [];
 
       let layers = [{
         shapeData: this.electoralBoundaries ,
@@ -142,12 +170,31 @@ export class HomeComponent implements OnInit {
           {
             width: 0.2,
             color: "#000000"
-          }
+          },
+          colorValuePath: 'currentPartyID',
+          colorMapping: [
+            {
+              value:"ALP", color: 'rgb(228,56,64)'
+            },
+            {
+              value: "GRN", color: 'rgb(0,140,68)'
+            },
+            {
+              value: "KAP", color: 'rgb(38,55,118)'
+            },
+            {
+              value: "LNP", color: 'rgb(47,132,200)'
+            },
+            {
+              value: "ONP", color: 'rgb(241,108,35)'
+            },
+          ]
+
         },
 
         dataLabelSettings:
         {
-           visible: true,
+          visible: true,
           labelPath: "electoralDistrict",
           smartLabelMode: "Hide"
         },
@@ -163,7 +210,7 @@ export class HomeComponent implements OnInit {
 
         markerSettings:
           [{            
-           visible: true,
+            visible: this.displayProjects,
            shape: "Image",
            imageUrl: "css/ballon.png",
            height : 20,
@@ -195,7 +242,25 @@ export class HomeComponent implements OnInit {
             {
               width: 0.2,
               color: "#000000"
-            }
+            },
+            colorValuePath: 'currentPartyID',
+            colorMapping: [
+              {
+                value: "ALP", color: 'rgb(228,56,64)'
+              },
+              {
+                value: "GRN", color: 'rgb(0,140,68)'
+              },
+              {
+                value: "KAP", color: 'rgb(38,55,118)'
+              },
+              {
+                value: "LNP", color: 'rgb(47,132,200)'
+              },
+              {
+                value: "ONP", color: 'rgb(241,108,35)'
+              },
+            ]
           },
 
           dataLabelSettings:
@@ -207,7 +272,7 @@ export class HomeComponent implements OnInit {
 
           markerSettings:
             [{
-              visible: true,
+              visible: this.displayProjects,
               shape: "Image",
               imageUrl: "css/ballon.png",
               height: 20,
@@ -228,6 +293,23 @@ export class HomeComponent implements OnInit {
     } catch (e) {
       console.error(e);
     }
+  }
+
+
+  public displayProjectsChange(arg: ChangeEventArgs) {
+    try {
+      this.displayProjects = arg.checked;
+
+      for (var layer of this.maps.layers) {
+        layer.markerSettings[0].visible = this.displayProjects;
+      }
+
+      this.maps.refresh();
+     
+    } catch (e) {
+      console.error(e);
+    }
+
   }
 
   
@@ -252,7 +334,6 @@ export class HomeComponent implements OnInit {
    
   }
 
-
   private DrillMap(newDistrict: string) {
 
     var district = this.electoraldistricts.filter(x => x.electoralDistrict.toUpperCase() === newDistrict.toUpperCase());
@@ -276,22 +357,6 @@ export class HomeComponent implements OnInit {
     }
 
   }
-
-  public zoomSettings: object = {
-    enable: true,
-    maxZoom: 7000,
-    doubleClickZoom: true,
-    enablePanning: true,
-    enableSelectionZooming: true,
-  };
-
-  titleSettings: object = {
-    text: 'Queensland',
-    textStyle: {
-      size: '16px'
-    }
-  };
-
 
   ngAfterViewInit() {
 
@@ -319,7 +384,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-
   public load = (args: ILoadEventArgs) => {
     let theme: string = location.hash.split('/')[1];
     theme = theme ? theme : 'Material';
@@ -329,17 +393,17 @@ export class HomeComponent implements OnInit {
 }
 
 
-
-
-
 let touchmove: boolean;
 export interface ShapeData { NAME: string; ID: number }
+
 export interface Electoraldistricts {
   idelectoralDistrict: number;
   electoralDistrict: string;
   year: number | null;
   coordinates: string;
   position: number;
+  currentParty: object;
+  currentPartyID: string;
 } 
 
 
@@ -373,4 +437,17 @@ export interface ItemFunnelChart {
   x: string;
   y: number;
   name: string;
+}
+
+export interface Population {
+  code: number;
+  label: string;
+  year: number;
+  medianAgeMales: number;
+  medianAgeFemales: number;
+  medianAgePersons: number;
+  malesTotal: number;
+  femalesTotal: number;
+  personsTotal: number;
+  populationDensityPersonsKm2: number;
 }

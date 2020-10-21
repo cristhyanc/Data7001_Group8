@@ -8,11 +8,11 @@ namespace DataWebTool.dbs863472
         public string ProjectTitle { get; set; }
         public string Department { get; set; }
         public string ProjectType { get; set; }
-        public string TotalEstimatedCost { get; set; }
-        public string LastFinancialYearExpenditure { get; set; }
-        public string CurrentFinancialYearExpenditure { get; set; }
+        public decimal? TotalEstimatedCost { get; set; }
+        public decimal? LastFinancialYearExpenditure { get; set; }
+        public decimal? CurrentFinancialYearExpenditure { get; set; }
         public string OngoingProgram { get; set; }
-        public string FutureFinancialYearExpenditure { get; set; }
+        public decimal? FutureFinancialYearExpenditure { get; set; }
         public string TenderCall { get; set; }
         public string ProcurementSystem { get; set; }
         public string IndicativePqcrating { get; set; }

@@ -33,6 +33,12 @@ namespace DataWebTool.Controllers
             return _context.Projectscsv.ToList();
         }
 
+        [HttpGet("GetPopulation")]
+        public IEnumerable<Population> GetPopulation()
+        {
+            return _context.Population.ToList();
+        }
+
         [HttpGet("GetElectoralBoundaries")]
         public string GetElectoralBoundaries()
         {
@@ -48,6 +54,7 @@ namespace DataWebTool.Controllers
             var featureCollection = JsonConvert.DeserializeObject<FeatureCollection>(data);
 
             var districts=_context.Electoraldistricts.Where(x => x.Year == 2017);
+            var districtParties = _context.ElectorateSafety.ToList();
 
             Parallel.ForEach(districts, (district) =>
             {
@@ -65,7 +72,14 @@ namespace DataWebTool.Controllers
 
                    // district.Coordinates = System.IO.File.ReadAllText(@"data\test.json"); 
                 }
-                
+
+                district.CurrentParty = districtParties.Where(x => x.Electorate.Equals(district.ElectoralDistrict)).FirstOrDefault();
+                if(district.CurrentParty!=null)
+                {
+                    district.CurrentPartyID = district.CurrentParty.Party;
+                }
+
+
             });
 
             return _context.Electoraldistricts.Where(x => x.Year == 2017);

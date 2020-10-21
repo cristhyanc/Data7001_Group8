@@ -19,6 +19,7 @@ namespace DataWebTool.dbs863472
         public virtual DbSet<Education2016> Education2016 { get; set; }
         public virtual DbSet<Education2017> Education2017 { get; set; }
         public virtual DbSet<Electoraldistricts> Electoraldistricts { get; set; }
+        public virtual DbSet<ElectorateSafety> ElectorateSafety { get; set; }
         public virtual DbSet<Fullelectoraldata> Fullelectoraldata { get; set; }
         public virtual DbSet<Population> Population { get; set; }
         public virtual DbSet<Population2014> Population2014 { get; set; }
@@ -32,12 +33,6 @@ namespace DataWebTool.dbs863472
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //Scaffold-DbContext "server=localhost;port=3306;user=root;password=password;database=dbs863472" MySql.Data.EntityFrameworkCore -OutputDir dbs863472 -f
-            if (!optionsBuilder.IsConfigured)
-            {
-                
-                optionsBuilder.UseMySQL("server=localhost;port=3306;user=root;password=password;database=dbs863472");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -225,6 +220,27 @@ namespace DataWebTool.dbs863472
                     .IsUnicode(false);
 
                 entity.Property(e => e.Year).HasColumnName("year");
+            });
+
+            modelBuilder.Entity<ElectorateSafety>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("electorate_safety");
+
+                entity.Property(e => e.Electorate)
+                    .HasMaxLength(16)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Margin).HasColumnType("decimal(4,2)");
+
+                entity.Property(e => e.Party)
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Safety)
+                    .HasMaxLength(11)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Fullelectoraldata>(entity =>
@@ -447,9 +463,7 @@ namespace DataWebTool.dbs863472
                     .HasMaxLength(190)
                     .IsUnicode(false);
 
-                entity.Property(e => e.CurrentFinancialYearExpenditure)
-                    .HasMaxLength(14)
-                    .IsUnicode(false);
+                entity.Property(e => e.CurrentFinancialYearExpenditure).HasColumnType("decimal(15,2)");
 
                 entity.Property(e => e.Department)
                     .HasMaxLength(42)
@@ -465,9 +479,7 @@ namespace DataWebTool.dbs863472
                     .HasMaxLength(11)
                     .IsUnicode(false);
 
-                entity.Property(e => e.FutureFinancialYearExpenditure)
-                    .HasMaxLength(15)
-                    .IsUnicode(false);
+                entity.Property(e => e.FutureFinancialYearExpenditure).HasColumnType("decimal(15,2)");
 
                 entity.Property(e => e.GeneralDepartment)
                     .HasMaxLength(45)
@@ -482,9 +494,7 @@ namespace DataWebTool.dbs863472
                     .HasMaxLength(3)
                     .IsUnicode(false);
 
-                entity.Property(e => e.LastFinancialYearExpenditure)
-                    .HasMaxLength(15)
-                    .IsUnicode(false);
+                entity.Property(e => e.LastFinancialYearExpenditure).HasColumnType("decimal(15,2)");
 
                 entity.Property(e => e.Latitude)
                     .HasColumnName("latitude")
@@ -530,9 +540,7 @@ namespace DataWebTool.dbs863472
                     .HasMaxLength(6)
                     .IsUnicode(false);
 
-                entity.Property(e => e.TotalEstimatedCost)
-                    .HasMaxLength(15)
-                    .IsUnicode(false);
+                entity.Property(e => e.TotalEstimatedCost).HasColumnType("decimal(15,2)");
             });
 
             modelBuilder.Entity<_2011BornoverseasCensus>(entity =>

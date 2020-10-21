@@ -123,6 +123,7 @@ namespace Data7001WebTool.Pages
                 asd.DataLabelSettings = new MapsDataLabelSettings();
                 asd.DataLabelSettings.Visible = true;
                 asd.DataLabelSettings.LabelPath = "Name";
+                asd.DataLabelSettings.
                 asd.DataLabelSettings.SmartLabelMode = SmartLabelMode.Hide;
 
                 asd.MarkerSettings = new List<MapsMarker>();

@@ -46,6 +46,12 @@ namespace DataWebTool.Controllers
             return data;
         }
 
+        [HttpGet("GetLGABoundaries")]
+        public string GetLGABoundaries()
+        {
+            var data = System.IO.File.ReadAllText(@"data\LGA.json");
+            return data;
+        }
 
         [HttpGet("GetElectoraldistricts2017")]
         public IEnumerable<Electoraldistricts> GetElectoraldistricts2017()
@@ -53,7 +59,7 @@ namespace DataWebTool.Controllers
             var data = System.IO.File.ReadAllText(@"data\State_electoral_boundaries_2017.json");
             var featureCollection = JsonConvert.DeserializeObject<FeatureCollection>(data);
 
-            var districts=_context.Electoraldistricts.Where(x => x.Year == 2017);
+            var districts=_context.Electoraldistricts.Where(x => x.Year == 2017).ToList();
             var districtParties = _context.ElectorateSafety.ToList();
 
             Parallel.ForEach(districts, (district) =>
@@ -82,7 +88,11 @@ namespace DataWebTool.Controllers
 
             });
 
-            return _context.Electoraldistricts.Where(x => x.Year == 2017);
+            return districts.OrderBy(x=> x.ElectoralDistrict);
         }
+
+
+
+
     }
 }

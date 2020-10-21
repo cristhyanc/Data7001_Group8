@@ -33,6 +33,7 @@ namespace DataWebTool.dbs863472
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+         
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

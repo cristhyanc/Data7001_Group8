@@ -13,21 +13,48 @@
       <ejs-dropdownlist id='districts' #listElectoralDistrict [dataSource]='electoraldistricts' (change)='onlistElectoralDistrictChange($event)' [value]='electoralDistrictValue'
                         [fields]='electoralDistrictFields'
                         placeholder='Select Electoral District'></ejs-dropdownlist>
+      <br />
 
-
-      <ejs-progressbar #progressBar1 id='progressBar1' [type]='type1' [maximum]='max1' [minimum]='min1'
+      <!--<ejs-progressbar #progressBar1 id='progressBar1' [type]='type1' [maximum]='max1' [minimum]='min1'
                        [value]='value1' [width]='width1' [height]='height1'
                        [animation]='animation'
-                       [isIndeterminate]='isIndeterminate1'>
+                       [isIndeterminate]='isIndeterminate1'>-->
 
-      </ejs-progressbar>
-
-      <ejs-checkbox label="Show Projects" [checked]="true" (change)="displayProjectsChange($event)"></ejs-checkbox>
-
+      <!--</ejs-progressbar>-->
     </div>
-    <div class="col-5">
+    <div class="col-5">   
     </div>
   </div>
+
+
+  <div class="row ">
+
+    <div class="col-1">
+    </div>
+    <div class="col-3">
+      <h4>Type of Map</h4>
+
+
+      <div class="row">
+        <ejs-radiobutton label="Show Electorate Districts" name="payment" value="electorate" checked="true" (change)="electoralLGAChange($event)"></ejs-radiobutton>
+      </div>
+      <div class="row">
+        <ejs-radiobutton label="Show Local Government Areas (Population)" name="payment" value="lga" (change)="electoralLGAChange($event)"></ejs-radiobutton>
+      </div>
+
+    </div>
+    <div class="col-3">
+      <ejs-checkbox label="Show Projects" [checked]="true" (change)="displayProjectsChange($event)"></ejs-checkbox>
+    </div>
+    <div class="col-5">
+     
+    </div>
+  </div>
+
+
+
+
+
   <div class="row ">
     <div class="col-6">
       <div id="button" style="font-size:14px;margin-left: 10px;margin-top: 20px;display:none;left:50px;top:50px;">
@@ -36,7 +63,7 @@
         <p id="text" style="display:inline-block;"></p>
       </div>
       <ejs-maps id='maps' #maps style="display:block;" height="700" width="100%" (shapeSelected)="shapeSelected($event)"
-                [titleSettings]='titleSettings' [zoomSettings]='zoomSettings' [legendSettings] = 'legendSettings'
+                [titleSettings]='titleSettings' [zoomSettings]='zoomSettings' [legendSettings]='legendSettings'
                 [layers]='layers' (load)="load($event)" (loaded)="loaded($event)">
 
       </ejs-maps>
@@ -50,17 +77,26 @@
             </e-series-collection>
           </ejs-chart>
         </div>
-        
+
 
         <div class="col-12">
-
-
-
+          <p>
+            Current Financial Year Expenditure: {{ currentFinancialYearExpenditure | number:'1.0':'en-US' }}
+          </p>
+          <p>
+            Last Financial Year Expenditure: {{ lastFinancialYearExpenditure | number:'1.0':'en-US' }}
+          </p>
+          <p>
+            Future Financial Year Expenditure: {{ futureFinancialYearExpenditure | number:'1.0':'en-US' }}
+          </p>
+          <p>
+            Total Estimated Cost: {{ totalEstimatedCost | number:'1.0':'en-US' }}
+          </p>
 
         </div>
       </div>
 
-     
+
 
 
     </div>

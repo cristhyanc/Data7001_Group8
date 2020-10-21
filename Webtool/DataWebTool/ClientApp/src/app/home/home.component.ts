@@ -3,14 +3,15 @@ import testjson from '../../../../data/test.json';
 import { Component, ViewEncapsulation, Inject, OnInit, ViewChild } from '@angular/core';
 import {
   MapsTheme, Maps, shapeSelected, IShapeSelectedEventArgs, Highlight,
-  MapsTooltip, Marker, ILoadEventArgs, ILoadedEventArgs, MapsComponent, LegendService, DataLabelService, MapsTooltipService, SelectionService, Zoom 
+  MapsTooltip, Marker, ILoadEventArgs, ILoadedEventArgs, MapsComponent, LegendService, DataLabelService, MapsTooltipService, SelectionService, Zoom, LayerSettings, LayerSettingsModel 
 } from '@syncfusion/ej2-angular-maps';
 import { MapAjax } from '@syncfusion/ej2-maps';
 import { HttpClient } from '@angular/common/http';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { AnimationModel } from '@syncfusion/ej2-progressbar';
 import { ProgressBar } from '@syncfusion/ej2-angular-progressbar';
-import { ChangeEventArgs } from '@syncfusion/ej2-angular-buttons';
+import { ChangeArgs, ChangeEventArgs } from '@syncfusion/ej2-angular-buttons';
+import { Double } from '@syncfusion/ej2-angular-charts';
 Maps.Inject(Highlight, MapsTooltip, Marker, Zoom);
 
 @Component({
@@ -63,11 +64,18 @@ export class HomeComponent implements OnInit {
   public electoralDistrictValue: string = '';
   public projects: Projectscsv[];
   public electoralBoundaries: string;
+  public lgaBoundaries: string;
   public electoraldistricts: Electoraldistricts[];
-  public layers: object[] = [];
+  public layers: LayerSettingsModel[] = [];
   public departmentsCount: ItemFunnelChart[] = [];
   public displayProjects: boolean;  
   public population: Population[] = [];
+  public currentFinancialYearExpenditure: number = 0;
+  public lastFinancialYearExpenditure: number = 0;
+  public futureFinancialYearExpenditure: number = 0;
+  public totalEstimatedCost: number = 0;
+   
+
 
   @ViewChild("maps") public maps: MapsComponent;
   @ViewChild('listElectoralDistrict') public listElectoralDistrict: DropDownListComponent;
@@ -86,17 +94,23 @@ export class HomeComponent implements OnInit {
     http.get<Projectscsv[]>(baseUrl + 'data7001/GetProjects').subscribe(result => {
       this.projects = result;
       this.createFunnelDepartmentData(result);
-      this.createLayers();
+      this.CreateInitialMapLayers();
+    }, error => console.error(error));
+
+    http.get<string>(baseUrl + 'data7001/GetLGABoundaries').subscribe(result => {
+      this.lgaBoundaries = result;
+      this.CreateInitialMapLayers();
     }, error => console.error(error));
 
     http.get<string>(baseUrl + 'data7001/GetElectoralBoundaries').subscribe(result => {
       this.electoralBoundaries = result;
-      this.createLayers();
+      this.CreateInitialMapLayers();
     }, error => console.error(error));
 
     http.get<Electoraldistricts[]>(baseUrl + 'data7001/GetElectoraldistricts2017').subscribe(result => {
       this.electoraldistricts = result;
-      this.createLayers();
+    
+      this.CreateInitialMapLayers();
     }, error => console.error(error));
   }
 
@@ -115,6 +129,11 @@ export class HomeComponent implements OnInit {
   private createFunnelDepartmentData(projects: Projectscsv[]) {  
 
     try {
+
+      this.lastFinancialYearExpenditure = projects.reduce((sum, current) => sum + current.lastFinancialYearExpenditure, 0);
+      this.futureFinancialYearExpenditure = projects.reduce((sum, current) => sum + current.futureFinancialYearExpenditure, 0);
+      this.totalEstimatedCost = projects.reduce((sum, current) => sum + current.totalEstimatedCost, 0);
+      this.currentFinancialYearExpenditure = projects.reduce((sum, current) => sum + current.currentFinancialYearExpenditure, 0);
 
       let departments: ItemFunnelChart[] = [];
       let department: ItemFunnelChart;
@@ -147,17 +166,21 @@ export class HomeComponent implements OnInit {
     }    
   }
 
-  private createLayers() {
+
+ 
+  private CreateInitialMapLayers() {
     try {
 
-      if (this.electoraldistricts == null || this.projects == null || this.electoralBoundaries==null ) {
+      if (this.electoraldistricts == null || this.projects == null || this.electoralBoundaries == null || this.lgaBoundaries == null || this.population==null ) {
         return;
       }
 
-    
+     
       this.layers = [];
 
-      let layers = [{
+      let layer: LayerSettingsModel =
+
+        {
         shapeData: this.electoralBoundaries ,
         shapePropertyPath: 'NAME',
         shapeDataPath: 'electoralDistrict',
@@ -219,9 +242,9 @@ export class HomeComponent implements OnInit {
             tooltipSettings: { visible: true, valuePath: 'projectTitle' }
           }]
 
-      }];
+      };
 
-      
+      this.layers.push(layer);
      
       var posti: number = 1;
       for (var district of this.electoraldistricts) {
@@ -229,7 +252,7 @@ export class HomeComponent implements OnInit {
         posti = posti + 1;
         let disProjects = this.projects.filter(x => x.electorate.toUpperCase() === district.electoralDistrict.toUpperCase());
 
-        var layer = {
+         layer = {
           layerType: 'Geometry',         
           shapeData: JSON.parse(district.coordinates),
           shapePropertyPath: 'NAME',
@@ -283,12 +306,79 @@ export class HomeComponent implements OnInit {
 
         };
 
-        layers.push(layer);
+        this.layers.push(layer);
       }
+        
       
-      this.layers = [...layers];
-    
+      layer = {
+        shapeData: this.lgaBoundaries,
+        shapePropertyPath: 'qld_lga__3',
+        shapeDataPath: 'label',
+        layerType: 'Geometry',
+        dataSource: this.population,
+        shapeSettings:
+        {
+          fill: "#E5E5E5",
+          border:
+          {
+            width: 0.2,
+            color: "#000000"
+          },
+          colorValuePath: 'personsTotal',
+          colorMapping: [
+            {
+              from: 0, to: 20000, color: '#F9EBEA', label: '<20'
+            },
+            {
+              from: 20000, to: 40000, color: '#F1948A', label: '20-40'
+            },
+            {
+              from: 40000, to: 60000, color: '#EC7063', label: '40-60'
+            },
+            {
+              from: 60000, to: 80000, color: '#E74C3C', label: '60-80'
+            },
+            {
+              from: 80000, to: 100000, color: '#CD6155', label: '80-100'
+            },
+            {
+              from: 100000, to: 200000, color: '#C0392B', label: '100-200'
+            },
+            {
+              from: 200000, to: 400000, color: '#A93226', label: '200-400'
+            },
+            {
+              from: 400000, to: 700000, color: '#922B21', label: '400-700'
+            },           
+            {
+              from: 700000, to: 1400000, color: '#641E16', label: '700-1.4M'
+            }
+          ]
+
+        },
+
+        dataLabelSettings:
+        {
+          visible: true,
+          labelPath: "label",
+          smartLabelMode: "Hide"
+        },       
+
+        markerSettings:
+          [{
+            visible: this.displayProjects,
+            shape: "Image",
+            imageUrl: "css/ballon.png",
+            height: 20,
+            width: 20,
+            dataSource: this.projects,
+            tooltipSettings: { visible: true, valuePath: 'projectTitle' }
+          }]
+
+      };
+
      
+      this.layers.push(layer);           
 
     } catch (e) {
       console.error(e);
@@ -312,6 +402,23 @@ export class HomeComponent implements OnInit {
 
   }
 
+  public electoralLGAChange(arg: ChangeArgs) {
+    try {
+
+      if (arg.value === 'lga') {
+        this.maps.baseLayerIndex = this.maps.layers.length - 1;
+        this.maps.refresh();
+      } else {
+        this.maps.baseLayerIndex = 0;
+        this.maps.refresh();
+      }
+      console.log(arg);
+
+    } catch (e) {
+      console.error(e);
+    }
+
+  }
   
   public shapeSelected = (args: IShapeSelectedEventArgs): void => {
    
@@ -341,7 +448,7 @@ export class HomeComponent implements OnInit {
       this.maps.baseLayerIndex = district[0].position;
 
       this.createFunnelDepartmentData(this.projects.filter(x => x.electorate.toUpperCase() === newDistrict.toUpperCase()));
-
+           
       this.maps.refresh();
       this.mapheight = 50;
       let button: HTMLElement = document.getElementById('button'); button.style.display = 'block';
@@ -411,11 +518,11 @@ export interface Projectscsv {
   projectTitle: string;
   department: string;
   projectType: string;
-  totalEstimatedCost: string;
-  lastFinancialYearExpenditure: string;
-  currentFinancialYearExpenditure: string;
+  totalEstimatedCost: number;
+  lastFinancialYearExpenditure: number;
+  currentFinancialYearExpenditure: number;
   ongoingProgram: string;
-  futureFinancialYearExpenditure: string;
+  futureFinancialYearExpenditure: number;
   tenderCall: string;
   procurementSystem: string;
   indicativePqcrating: string;

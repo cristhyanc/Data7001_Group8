@@ -30,7 +30,7 @@ Slide 6 Is my data fit for use?
 * Planned duration for this slide: 0:30.
 * (data Quality,cleaning and integration) Speaker:SAK interested.
 * how we developed a cloud-based DataBase Speaker:SAK interested.
-* Data Enrichment
+* Data Enrichment : Speaker:SAK interested.
 
 Slide 7 Making the data confess
 * Planned duration for this slide: 1:00.

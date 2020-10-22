@@ -23,7 +23,7 @@ Slide 4 [ initial live demo of web tool here ]
 
 Slide 5 Getting the Data (I need)
 * Planned duration for this slide: 1:00.
-* Speaker: TBC; CJRS interested; SAK interested.
+* Speaker: TBC; CJRS interested; SAK interested; MBC interested.
 
 
 Slide 6 Is my data fit for use?
@@ -34,6 +34,7 @@ Slide 6 Is my data fit for use?
 
 Slide 7 Making the data confess
 * Planned duration for this slide: 1:00.
+* Speaker: TBC; MBC interested.
 
 Slide 8 [ live demo / storytelling with data ]
 * Planned duration for this item: 2:00.

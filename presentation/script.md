@@ -24,7 +24,7 @@ Content
 Visuals
 * (None)
 
-### Slide 3 The Problem (Solving with Data)
+### Slide 3 - The Problem (Solving with Data)
 * Duration: 0:45.
 * Speaker: CJRS.
 
@@ -32,16 +32,16 @@ Content
 * (To be prepared by CJRS.)
 
 Visuals
-* 
+* (TBC).
 
-### Slide 4 [ live demo ( / storytelling with data ) ]
+### Slide 4 - [ live demo ( / storytelling with data ) ]
 * Duration: 2:30.
 * Speaker: SAK / CCG.
 
 Audiovisual content
 * (Screen recording of demo of web tool by SAK and CCG with commentary.)
 
-### Slide 5 Getting the Data (I need)
+### Slide 5 - Getting the Data (I need)
 * Duration: 1:00.
 * Speaker: CCG.
 
@@ -50,9 +50,9 @@ Content
 * Other (input by all).
 
 Visuals
-*
+* (TBC).
 
-### Slide 6 Is my data fit for use?
+### Slide 6 - Is my data fit for use?
 * Duration: 0:30.
 * Speaker: SAK & MBC
 
@@ -66,18 +66,18 @@ Content
 Visuals
 *
 
-### Slide 7 Making the data confess
+### Slide 7 - Making the data confess
 * Duration: 1:00.
 * Speaker: MBC. ?HHV too
 
 Content
-*
+* (TBC).
 
 Visuals
 * correlation matrix
 * logistic regression.
 
-### Slide 8 Conclusion
+### Slide 8 - Conclusion
 * Duration: 0:30.
 * Speaker: HHV.
 
@@ -87,9 +87,9 @@ Content
 * What we could do next: more advanced statistical techniques, more and better data, temporal data, more sophisticated method of classifying seat safeness.
 
 Visuals
-* 
+* (TBC).
 
-### Slide 9 Thank you / any questions
+### Slide 9 - Thank you / any questions
 * Duration: 0:10.
 * Speaker: HHV.
 

@@ -47,7 +47,9 @@ Audiovisual content
 
 Content
 * Electoral bounaries (input by CJRS).
-* Other (input by all).
+* Spending data (input by CJRS).
+* Election results (input by MBC).
+* Other/Census (input by all).
 
 Visuals
 * (TBC).
@@ -71,11 +73,14 @@ Visuals
 * Speaker: MBC. ?HHV too
 
 Content
-* (TBC).
+* Methodology (transform variables -> correlations -> plot and develop models) 
+* Follow with visuals
 
 Visuals
 * correlation matrix
 * logistic regression.
+* Linear Spending vs Labour Margin (not overt)
+* Unexpected relationships
 
 ### Slide 8 - Conclusion
 * Duration: 0:30.

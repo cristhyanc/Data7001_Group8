@@ -4,7 +4,7 @@
 * allocate minutes, slides, and speakers between sections
 * talking points here
 
-### Slide 1 (Title)
+### Slide 1 - (Title)
 * Duration: 0:15.
 * Speaker: CJRS.
 
@@ -14,7 +14,7 @@ Content
 Visuals
 * (None)
 
-### Slide 2 (Names of team members)
+### Slide 2 - (Names of team members)
 * Duration: 0:15.
 * Speaker: CJRS.
 

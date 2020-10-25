@@ -4,51 +4,98 @@
 * allocate minutes, slides, and speakers between sections
 * talking points here
 
-Slide 1 (Title)
-* Planned duration for this slide: 0:15.
-* Speaker: TBC; CJRS interested.
+### Slide 1 - (Title)
+* Duration: 0:15.
+* Speaker: CJRS.
+
+Content
 * Welcome to our presentation for DATA7001. We are group 8.
 
-Slide 2 (Names of team members)
-* Planned duration for this slide: 0:15.
-* Speaker: TBC; CJRS interested.
+Visuals
+* (None)
+
+### Slide 2 - (Names of team members)
+* Duration: 0:15.
+* Speaker: CJRS.
+
+Content
 * (I think we just quickly say first names and move on.)
 
-Slide 3 The Problem (Solving with Data)
-* Speaker: TBC; CJRS interested.
-* Planned duration for this slide: 0:45.
+Visuals
+* (None)
 
-Slide 4 [ initial live demo of web tool here ]
-* Planned duration for this item: 0:30.
+### Slide 3 - The Problem (Solving with Data)
+* Duration: 0:45.
+* Speaker: CJRS.
 
-Slide 5 Getting the Data (I need)
-* Planned duration for this slide: 1:00.
-* Speaker: TBC; CJRS interested; SAK interested; MBC interested.
+Content
+* (To be prepared by CJRS.)
 
+Visuals
+* (TBC).
 
-Slide 6 Is my data fit for use?
-* Planned duration for this slide: 0:30.
-* (data Quality,cleaning and integration) Speaker:SAK interested.
-* how we developed a cloud-based DataBase Speaker:SAK interested.
-* Data Enrichment : Speaker:SAK interested.
+### Slide 4 - [ live demo ( / storytelling with data ) ]
+* Duration: 2:30.
+* Speaker: SAK / CCG.
 
-Slide 7 Making the data confess
-* Planned duration for this slide: 1:00.
-* Speaker: TBC; MBC interested.
+Audiovisual content
+* (Screen recording of demo of web tool by SAK and CCG with commentary.)
 
-Slide 8 [ live demo / storytelling with data ]
-* Planned duration for this item: 2:00.
+### Slide 5 - Getting the Data (I need)
+* Duration: 1:00.
+* Speaker: CCG.
 
-Slide 9 Conclusion
-* Planned duration for this slide: 0:30.
-* Speaker: TBC; CJRS interested.
+Content
+* Electoral bounaries (input by CJRS).
+* Spending data (input by CJRS).
+* Election results (input by MBC).
+* Other/Census (input by all).
 
-Slide 10 Thank you / any questions
-* Planned duration for this slide: 0:10.
-* Speaker: TBC; CJRS interested.
+Visuals
+* (TBC).
 
-Slide 11 ?References
-* Planned duration for this slide: 0:05.
-* (I think we just show this; don't even talk to it.)
+### Slide 6 - Is my data fit for use?
+* Duration: 0:30.
+* Speaker: SAK & MBC
 
-Total planned dduration 7:00.
+Content
+* Data quality, cleaning, integration.
+* Collabroation: GitHub.
+* how we developed a cloud-based DataBase.
+* Data Enrichment.
+* Census data (input by HHV).
+
+Visuals
+*
+
+### Slide 7 - Making the data confess
+* Duration: 1:00.
+* Speaker: MBC. ?HHV too
+
+Content
+* Methodology (transform variables -> correlations -> plot and develop models) 
+* Follow with visuals
+
+Visuals
+* correlation matrix
+* logistic regression.
+* Linear Spending vs Labour Margin (not overt)
+* Unexpected relationships
+
+### Slide 8 - Conclusion
+* Duration: 0:30.
+* Speaker: HHV.
+
+Content
+* What we did (data science process).
+* What we found (very briefly).
+* What we could do next: more advanced statistical techniques, more and better data, temporal data, more sophisticated method of classifying seat safeness.
+
+Visuals
+* (TBC).
+
+### Slide 9 - Thank you / any questions
+* Duration: 0:10.
+* Speaker: HHV.
+
+Total planned duration 7:00.

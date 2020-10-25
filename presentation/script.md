@@ -4,7 +4,7 @@
 * allocate minutes, slides, and speakers between sections
 * talking points here
 
-**Slide 1 (Title)**
+### Slide 1 (Title)
 * Duration: 0:15.
 * Speaker: CJRS.
 
@@ -14,7 +14,7 @@ Content
 Visuals
 * (None)
 
-**Slide 2 (Names of team members)**
+### Slide 2 (Names of team members)
 * Duration: 0:15.
 * Speaker: CJRS.
 
@@ -24,7 +24,7 @@ Content
 Visuals
 * (None)
 
-**Slide 3 The Problem (Solving with Data)**
+### Slide 3 The Problem (Solving with Data)
 * Duration: 0:45.
 * Speaker: CJRS.
 
@@ -34,14 +34,14 @@ Content
 Visuals
 * 
 
-**Slide 4 [ live demo ( / storytelling with data ) ]**
+### Slide 4 [ live demo ( / storytelling with data ) ]
 * Duration: 2:30.
 * Speaker: SAK / CCG.
 
 Audiovisual content
 * (Screen recording of demo of web tool by SAK and CCG with commentary.)
 
-**Slide 5 Getting the Data (I need)**
+### Slide 5 Getting the Data (I need)
 * Duration: 1:00.
 * Speaker: CCG.
 
@@ -52,7 +52,7 @@ Content
 Visuals
 *
 
-**Slide 6 Is my data fit for use?**
+### Slide 6 Is my data fit for use?
 * Duration: 0:30.
 * Speaker: SAK & MBC
 
@@ -66,7 +66,7 @@ Content
 Visuals
 *
 
-**Slide 7 Making the data confess**
+### Slide 7 Making the data confess
 * Duration: 1:00.
 * Speaker: MBC. ?HHV too
 
@@ -77,7 +77,7 @@ Visuals
 * correlation matrix
 * logistic regression.
 
-**Slide 8 Conclusion**
+### Slide 8 Conclusion
 * Duration: 0:30.
 * Speaker: HHV.
 
@@ -89,7 +89,7 @@ Content
 Visuals
 * 
 
-**Slide 9 Thank you / any questions**
+### Slide 9 Thank you / any questions
 * Duration: 0:10.
 * Speaker: HHV.
 

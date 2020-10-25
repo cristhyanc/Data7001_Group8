@@ -33,7 +33,12 @@ namespace DataWebTool.dbs863472
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-         
+            //Scaffold-DbContext "server=localhost;port=3306;user=root;password=password;database=dbs863472" MySql.Data.EntityFrameworkCore -OutputDir dbs863472 -f
+            if (!optionsBuilder.IsConfigured)
+            {
+                    optionsBuilder.UseMySQL("server=db5000995754.hosting-data.io;port=3306;user=dbu853069;password=Data7001Group&;database=dbs863472");
+              //  optionsBuilder.UseMySQL("server=localhost;port=3306;user=root;password=password;database=dbs863472");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -214,6 +219,11 @@ namespace DataWebTool.dbs863472
 
                 entity.Property(e => e.IdelectoralDistrict).HasColumnName("idelectoralDistrict");
 
+                entity.Property(e => e.Electoral2015)
+                    .HasColumnName("electoral2015")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.ElectoralDistrict)
                     .IsRequired()
                     .HasColumnName("electoralDistrict")
@@ -242,6 +252,8 @@ namespace DataWebTool.dbs863472
                 entity.Property(e => e.Safety)
                     .HasMaxLength(11)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Year).HasColumnName("year");
             });
 
             modelBuilder.Entity<Fullelectoraldata>(entity =>

@@ -9,5 +9,6 @@ namespace DataWebTool.dbs863472
         public string Party { get; set; }
         public string Safety { get; set; }
         public decimal? Margin { get; set; }
+        public int? Year { get; set; }
     }
 }

@@ -11,10 +11,10 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { MapsAllModule, MapsModule  } from '@syncfusion/ej2-angular-maps';
+import { BubbleService, MapsAllModule, MapsModule  } from '@syncfusion/ej2-angular-maps';
 import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 import { ProgressBarModule } from '@syncfusion/ej2-angular-progressbar';
-import { AccumulationChartModule, ChartModule } from '@syncfusion/ej2-angular-charts';
+import { AccumulationChartModule, ChartAllModule, ChartModule } from '@syncfusion/ej2-angular-charts';
 import { BarSeriesService, StackingBarSeriesService, CategoryService } from '@syncfusion/ej2-angular-charts';
 import { CheckBoxModule, RadioButtonModule } from '@syncfusion/ej2-angular-buttons';
 
@@ -27,7 +27,7 @@ import { CheckBoxModule, RadioButtonModule } from '@syncfusion/ej2-angular-butto
     FetchDataComponent
   ],
   imports: [
-    MapsAllModule, MapsModule, DropDownListModule, ProgressBarModule, ChartModule, CheckBoxModule, RadioButtonModule,
+    MapsAllModule, MapsModule, DropDownListModule, ProgressBarModule, ChartModule, CheckBoxModule, RadioButtonModule, ChartAllModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
@@ -38,7 +38,7 @@ import { CheckBoxModule, RadioButtonModule } from '@syncfusion/ej2-angular-butto
       { path: 'fetch-data', component: FetchDataComponent },
     ])
   ],
-  providers: [BarSeriesService, StackingBarSeriesService, CategoryService],
+  providers: [BarSeriesService, StackingBarSeriesService, CategoryService, BubbleService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

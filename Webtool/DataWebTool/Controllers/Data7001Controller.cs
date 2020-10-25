@@ -53,13 +53,22 @@ namespace DataWebTool.Controllers
             return data;
         }
 
-        [HttpGet("GetElectoraldistricts2017")]
-        public IEnumerable<Electoraldistricts> GetElectoraldistricts2017()
+
+        [HttpGet("GetElectorateSafety")]
+        public List<ElectorateSafety> GetElectorateSafety()
+        {            
+            return _context.ElectorateSafety.ToList(); ;
+        }
+
+
+
+        [HttpGet("GetElectoraldistricts")]
+        public IEnumerable<Electoraldistricts> GetElectoraldistricts()
         {
             var data = System.IO.File.ReadAllText(@"data\State_electoral_boundaries_2017.json");
             var featureCollection = JsonConvert.DeserializeObject<FeatureCollection>(data);
 
-            var districts=_context.Electoraldistricts.Where(x => x.Year == 2017).ToList();
+            var districts=_context.Electoraldistricts.ToList();
             var districtParties = _context.ElectorateSafety.ToList();
 
             Parallel.ForEach(districts, (district) =>
@@ -78,8 +87,15 @@ namespace DataWebTool.Controllers
 
                    // district.Coordinates = System.IO.File.ReadAllText(@"data\test.json"); 
                 }
-
-                district.CurrentParty = districtParties.Where(x => x.Electorate.Equals(district.ElectoralDistrict)).FirstOrDefault();
+                if(district.Year==2017)
+                {
+                    district.CurrentParty = districtParties.Where(x => x.Electorate.Equals(district.ElectoralDistrict) && x.Year == district.Year).FirstOrDefault();
+                }
+                else
+                {
+                    district.CurrentParty = districtParties.Where(x => x.Electorate.Equals(district.Electoral2015) && x.Year == district.Year).FirstOrDefault();
+                }
+               
                 if(district.CurrentParty!=null)
                 {
                     district.CurrentPartyID = district.CurrentParty.Party;

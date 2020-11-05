@@ -89,7 +89,7 @@ model1 <- glm(logCost~., data = df_new)
 summary(model1)
 
 # Linear with logarithmic transformation of Y
-model2 <- lm(logCost~Working_Age+log(Median_tot_fam_inc_weekly)+Full_time_Employ+isALP+ALP_Safety_Ranking+Margin)
+model2 <- lm(logCost~Working_Age+Retired+log(Median_tot_fam_inc_weekly)+Full_time_Employ+isALP+ALP_Safety_Ranking+Margin)
 summary(model2)
 mod.resid <- resid(model2)
 plot(model2)

@@ -105,7 +105,6 @@ plot(mod.resid, ylab = "Residual")
 abline(0,0,col="red")
 gvlma.lm <- gvlma(model2)
 summary(gvlma.lm)
-spreadLevelPlot(model2, main = "Spread-Level Plot for Multiple Regression")
 
 # GLM with gamma function
 gamma.model <- glm(logCost~Working_Age+isALP+ALP_Safety_Ranking, family = gaussian())

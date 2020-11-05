@@ -1,0 +1,133 @@
+
+
+
+
+
+<div class="control-section">
+  <div class="row ">
+
+    <div class="col-1">
+    </div>
+    <div class="col-6">
+      Electoral
+      <ejs-dropdownlist id='districts' #listElectoralDistrict [dataSource]='electoraldistrictsDropbox' (change)='onlistElectoralDistrictChange($event)' [value]='electoralDistrictValue'
+                        [fields]='electoralDistrictFields'
+                        placeholder='Select Electoral District'></ejs-dropdownlist>
+      <br />
+
+      <!--<ejs-progressbar #progressBar1 id='progressBar1' [type]='type1' [maximum]='max1' [minimum]='min1'
+                       [value]='value1' [width]='width1' [height]='height1'
+                       [animation]='animation'
+                       [isIndeterminate]='isIndeterminate1'>-->
+      <!--</ejs-progressbar>-->
+    </div>
+    <div class="col-5">
+    </div>
+  </div>
+
+
+  <div class="row ">
+
+    <div class="col-1">
+    </div>
+    <div class="col-3">
+      <h4>Type of Map</h4>
+
+
+      <div class="row">
+        <ejs-radiobutton label="Show Electoral Districts" name="payment" value="electorate" checked="true" (change)="electoralLGAChange($event)"></ejs-radiobutton>
+      </div>
+      <div class="row">
+        <ejs-radiobutton label="Show Local Government Areas (Population)" name="payment" value="lga" (change)="electoralLGAChange($event)"></ejs-radiobutton>
+      </div>
+      <br />
+      <ejs-checkbox label="Show Projects" [checked]="false" (change)="displayProjectsChange($event)"></ejs-checkbox>
+    </div>
+    <div class="col-3">
+
+
+    </div>
+    <div class="col-5">
+
+    </div>
+  </div>
+
+
+
+
+
+  <div class="row ">
+    <div class="col-6">
+      <div id="button" style="font-size:14px;margin-left: 10px;margin-top: 20px;display:none;left:50px;top:50px;">
+        <a id="category" style="visibility:hidden; color:blue; display:inline-block"> Queensland Map </a>
+        <p style="visibility:hidden; display:inline-block" id="symbol">&nbsp;&gt;&gt;&nbsp;</p>
+        <p id="text" style="display:inline-block;"></p>
+      </div>
+      <ejs-maps id='maps' #maps style="display:block;" height="700" width="100%" (shapeSelected)="shapeSelected($event)"
+                [titleSettings]='titleSettings' [zoomSettings]='zoomSettings' [legendSettings]='legendSettings'
+                [layers]='layers' (load)="load($event)" (loaded)="loaded($event)">
+
+      </ejs-maps>
+    </div>
+    <div class="col-6">
+
+      <div class="row">
+        <div id="chartDepartments" class="col-12">
+          <div class="col-12">
+            <ejs-chart [primaryXAxis]='primaryXAxis' width="100%">
+              <e-series-collection>
+                <e-series [dataSource]='departmentsCount' type='Bar' xName='name' yName='y' name='Projects'></e-series>
+              </e-series-collection>
+            </ejs-chart>
+          </div>
+
+
+          <div class="col-12">
+            <p>
+              Current Financial Year Expenditure: {{ currentFinancialYearExpenditure | number:'1.0':'en-US' }}
+            </p>
+            <p>
+              Last Financial Year Expenditure: {{ lastFinancialYearExpenditure | number:'1.0':'en-US' }}
+            </p>
+            <p>
+              Future Financial Year Expenditure: {{ futureFinancialYearExpenditure | number:'1.0':'en-US' }}
+            </p>
+            <p>
+              Total Estimated Cost: {{ totalEstimatedCost | number:'1.0':'en-US' }}
+            </p>
+
+          </div>
+        </div>
+      </div>
+      <div class="row" id="charBubble">
+
+        <div class="col-3">
+        </div>
+        <div class="col-6">
+          State Election Year
+          <ejs-dropdownlist id='listyears' #listyears [dataSource]='yearsList' (change)='onlistyearChange($event)' [value]='yearsListValue'
+                            placeholder='Select Electoral District'></ejs-dropdownlist><br />
+        </div>
+        <div class="col-3">
+        </div>
+        <div class="col-12">
+
+
+          <ejs-chart style='display:block;' #chartcontainer [chartArea]='bubblechartArea' [width]=' bubblewidth' align='center' id='chartcontainer' (pointRender)='pointRender($event)' (load)='bubbleload($event)'
+                     [primaryXAxis]='bubbleprimaryXAxis' [primaryYAxis]='bubbleprimaryYAxis'
+                     [title]='bubbletitle' [tooltip]='bubbletooltip' [legendSettings]='bubblelegend'>
+            <e-series-collection>
+              <e-series [dataSource]='data2' [minRadius]='bubbleminRadius' [maxRadius]='bubblemaxRadius' type='Bubble' xName='x' yName='y' size='size' name='Pound' [marker]='bubblemarker'> </e-series>
+            </e-series-collection>
+          </ejs-chart>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+

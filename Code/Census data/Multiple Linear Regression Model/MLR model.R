@@ -3,6 +3,7 @@ library(tidyverse)
 library(dplyr)
 library(car)
 library(gvlma)
+library(broom)
 setwd("~/GitHub/Data7001_Group8/Code/Census data")
 # Census data
 census <- read.csv("Census_3_Corrected SED.csv", header = TRUE)
@@ -56,7 +57,6 @@ newpartydf <- newpartydf[,-c(1,3,4,5,8)]
 newpartydf$Electorate <- toupper(newpartydf$Electorate)
 
 combined <- merge(merge(census, newpartydf, all = F), projectSum, all=F)
-write.csv(combined, 'combined3.csv')
 data <- combined
 data$logCost <- log(data$TotalEstimatedCost)
 attach(data)
@@ -65,8 +65,11 @@ attach(data)
 boxplot(TotalEstimatedCost)
 hist(TotalEstimatedCost, freq = F)
 boxplot(logCost)
+par(mfrow=c(1,2))
+plot(density(TotalEstimatedCost), col='blue')
 plot(density(logCost), col='red')
 hist(logCost, freq = F, add=T)
+par(mfrow=c(1,1))
 
 xyplot(logCost~Enrolment)
 xyplot(logCost~Tot_Population)
@@ -93,6 +96,7 @@ model2 <- lm(logCost~Working_Age+Retired+log(Median_tot_fam_inc_weekly)+Full_tim
 summary(model2)
 mod.resid <- resid(model2)
 plot(model2)
+crPlots(model2)
 qqnorm(mod.resid)
 qqline(mod.resid, col='red')
 plot(x=fitted(model2), y=mod.resid, main = "Residual vs Fitted Plot",
@@ -105,7 +109,11 @@ plot(mod.resid, ylab = "Residual")
 abline(0,0,col="red")
 gvlma.lm <- gvlma(model2)
 summary(gvlma.lm)
+glance(model2) %>% 
+  dplyr::select(AIC, BIC)
 
 # GLM with gamma function
-gamma.model <- glm(logCost~Working_Age+isALP+ALP_Safety_Ranking, family = gaussian())
-summary(gamma.model)
+gaus.model <- glm(logCost~Working_Age+Retired+isALP+ALP_Safety_Ranking, family = gaussian())
+summary(gaus.model)
+plot(gaus.model)
+crPlots(gaus.model)
